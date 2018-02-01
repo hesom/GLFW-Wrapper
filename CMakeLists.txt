@@ -15,13 +15,15 @@ set(LIB_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 
 add_subdirectory(${LIB_ROOT_DIR}/glfw)
 
-file(GLOB_RECURSE SRC "src/*.cpp" "src/*.c")
+set(SRC src/inputevent.cpp
+		src/window.cpp
+	)
 
 add_library(glfw-wrapper STATIC ${SRC})
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
-  ${LIB_ROOT_DIR}/glfw-3.2.1/include
+  ${LIB_ROOT_DIR}/glfw/include
 )
 
 find_package(OpenGL)
@@ -30,3 +32,6 @@ target_compile_definitions(glfw-wrapper PRIVATE GLFW_INCLUDE_NONE)
 
 target_link_libraries(glfw-wrapper ${OPENGL_gl_LIBRARY})
 target_link_libraries(glfw-wrapper glfw)
+
+add_executable(example example/main.cpp)
+target_link_libraries(example glfw-wrapper)

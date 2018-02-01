@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.4)
 project(GLFW-Wrapper)
 
+option(BUILD_EXAMPLE "Build example project" OFF)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
@@ -33,5 +35,7 @@ target_compile_definitions(glfw-wrapper PRIVATE GLFW_INCLUDE_NONE)
 target_link_libraries(glfw-wrapper ${OPENGL_gl_LIBRARY})
 target_link_libraries(glfw-wrapper glfw)
 
+if(BUILD_EXAMPLE)
 add_executable(example example/main.cpp)
 target_link_libraries(example glfw-wrapper)
+endif()

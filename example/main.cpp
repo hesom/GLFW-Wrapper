@@ -1,5 +1,8 @@
 #include "glfw-wrapper.h"
 #include <iostream>
+
+using namespace glfww;
+
 class Listener : IKeyListener
 {
 public:

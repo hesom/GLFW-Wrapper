@@ -4,30 +4,32 @@
 #include <string>
 
 class GLFWwindow;
-
-/*! Wrapper class for a GLFW window
-Methods are static because only a single window should exist
-at any given time
-*/
-class Window
+namespace glfww
 {
-private:
-    static GLFWwindow* window;
-    Window() {}
-    static bool init();
+    /*! Wrapper class for a GLFW window
+    Methods are static because only a single window should exist
+    at any given time
+    */
+    class Window
+    {
+    private:
+        static GLFWwindow* window;
+        Window() {}
+        static bool init();
 
-public:
-    static void create(
-        const int width,
-        const int height,
-        const std::string title,
-        const int glVersionMajor,
-        const int glVersionMinor);
-    static void destroy();
-    static bool exitRequested();
-    static void update();
+    public:
+        static void create(
+            const int width,
+            const int height,
+            const std::string title,
+            const int glVersionMajor,
+            const int glVersionMinor);
+        static void destroy();
+        static bool exitRequested();
+        static void update();
 
-    Window(Window const&) = delete;
-    void operator=(Window const&) = delete;
+        Window(Window const&) = delete;
+        void operator=(Window const&) = delete;
 
-};
+    };
+}

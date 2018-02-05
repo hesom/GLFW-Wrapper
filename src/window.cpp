@@ -3,60 +3,64 @@
 
 #include "glfw/glfw3.h"
 
-GLFWwindow* Window::window;
-
-bool Window::init()
+namespace glfww
 {
-    return glfwInit();
-}
+    GLFWwindow* Window::window;
 
-void Window::create(const int width, const int height, const std::string title, int glVersionMajor, int glVersionMinor)
-{
-    init();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersionMajor);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersionMinor);
+    bool Window::init()
+    {
+        return glfwInit();
+    }
 
-    window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    void Window::create(const int width, const int height, const std::string title, int glVersionMajor, int glVersionMinor)
+    {
+        init();
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersionMajor);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersionMinor);
 
-    glfwMakeContextCurrent(window);
+        window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
-    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-        if (action == GLFW_PRESS) {
-            InputEvent::handleKeyPressedEvent(key, mods);
-        }
-        else if (action == GLFW_RELEASE) {
-            InputEvent::handleKeyReleasedEvent(key, mods);
-        }
-    });
-    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
-        if (action == GLFW_PRESS) {
-            InputEvent::handleMousePressedEvent(button, mods);
-        }
-        else if (action == GLFW_RELEASE) {
-            InputEvent::handleMouseReleasedEvent(button, mods);
-        }
-    });
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
-        InputEvent::handleCursorEvent(xpos, ypos);
-    });
-    glfwSetScrollCallback(window, [](GLFWwindow* window, double xoffset, double yoffset) {
-        InputEvent::handleScrollEvent(xoffset, yoffset);
-    });
+        glfwMakeContextCurrent(window);
 
-}
+        glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+            if (action == GLFW_PRESS) {
+                InputEvent::handleKeyPressedEvent(key, mods);
+            }
+            else if (action == GLFW_RELEASE) {
+                InputEvent::handleKeyReleasedEvent(key, mods);
+            }
+        });
+        glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+            if (action == GLFW_PRESS) {
+                InputEvent::handleMousePressedEvent(button, mods);
+            }
+            else if (action == GLFW_RELEASE) {
+                InputEvent::handleMouseReleasedEvent(button, mods);
+            }
+        });
+        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+            InputEvent::handleCursorEvent(xpos, ypos);
+        });
+        glfwSetScrollCallback(window, [](GLFWwindow* window, double xoffset, double yoffset) {
+            InputEvent::handleScrollEvent(xoffset, yoffset);
+        });
 
-void Window::destroy()
-{
-    glfwDestroyWindow(window);
-}
+    }
 
-bool Window::exitRequested()
-{
-    return glfwWindowShouldClose(window);
-}
+    void Window::destroy()
+    {
+        glfwDestroyWindow(window);
+    }
 
-void Window::update()
-{
-    glfwSwapBuffers(window);
-    glfwPollEvents();
+    bool Window::exitRequested()
+    {
+        return glfwWindowShouldClose(window);
+    }
+
+    void Window::update()
+    {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
 }

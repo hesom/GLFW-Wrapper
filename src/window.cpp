@@ -1,28 +1,28 @@
 #include "window.h"
 #include "inputevent.h"
 
-#include "glfw/glfw3.h"
+#include "GLFW/glfw3.h"
 
 namespace glfww
 {
-    GLFWwindow* Window::window;
+    GLFWwindow* Window::m_window;
 
     bool Window::init()
     {
         return glfwInit();
     }
 
-    void Window::create(const int width, const int height, const std::string title, int glVersionMajor, int glVersionMinor)
+    void Window::create(const int width, const int height, const std::string& title, const int glVersionMajor, const int glVersionMinor)
     {
         init();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersionMajor);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersionMinor);
 
-        window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+        m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(m_window);
 
-        glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+        glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
             if (action == GLFW_PRESS) {
                 InputEvent::handleKeyPressedEvent(key, mods);
             }
@@ -30,7 +30,7 @@ namespace glfww
                 InputEvent::handleKeyReleasedEvent(key, mods);
             }
         });
-        glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
+        glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
             if (action == GLFW_PRESS) {
                 InputEvent::handleMousePressedEvent(button, mods);
             }
@@ -38,10 +38,10 @@ namespace glfww
                 InputEvent::handleMouseReleasedEvent(button, mods);
             }
         });
-        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xpos, double ypos) {
+        glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xpos, double ypos) {
             InputEvent::handleCursorEvent(xpos, ypos);
         });
-        glfwSetScrollCallback(window, [](GLFWwindow* window, double xoffset, double yoffset) {
+        glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xoffset, double yoffset) {
             InputEvent::handleScrollEvent(xoffset, yoffset);
         });
 
@@ -49,17 +49,17 @@ namespace glfww
 
     void Window::destroy()
     {
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(m_window);
     }
 
     bool Window::exitRequested()
     {
-        return glfwWindowShouldClose(window);
+        return glfwWindowShouldClose(m_window);
     }
 
     void Window::update()
     {
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(m_window);
         glfwPollEvents();
     }
 

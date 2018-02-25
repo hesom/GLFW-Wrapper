@@ -13,15 +13,15 @@ namespace glfww
     class Window
     {
     private:
-        static GLFWwindow* window;
-        Window() {}
+        static GLFWwindow* m_window;
+        Window() = default;
         static bool init();
 
     public:
         static void create(
             const int width,
             const int height,
-            const std::string title,
+            const std::string& title,
             const int glVersionMajor,
             const int glVersionMinor);
         static void destroy();
@@ -29,6 +29,7 @@ namespace glfww
         static void update();
 
         Window(Window const&) = delete;
+        Window(Window const&&) = delete;
         void operator=(Window const&) = delete;
 
     };

@@ -11,13 +11,13 @@ public:
         InputEvent::attachKeyListener(this);
     }
 
-    void onKeyPressed(Key key, std::vector<KeyMod> mods)
+    void onKeyPressed(const Key key, std::vector<KeyMod> mods) override
     {
         if (key == Key::KEY_A) {
             std::cout << "A pressed!" << std::endl;
         }
     }
-    void onKeyReleased(Key key, std::vector<KeyMod> mods)
+    void onKeyReleased(const Key key, std::vector<KeyMod> mods) override
     {
         if (key == Key::KEY_A) {
             std::cout << "A released!" << std::endl;

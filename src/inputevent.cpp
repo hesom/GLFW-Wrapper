@@ -1,44 +1,44 @@
 #include "inputevent.h"
-#include "glfw/glfw3.h"
+#include "GLFW/glfw3.h"
 #include "keymap.h"
 #include <vector>
 #include <algorithm>
 
 namespace glfww
 {
+    // ReSharper disable once CppInconsistentNaming
     double InputEvent::m_mouseX_old = 0.0;
+    // ReSharper disable once CppInconsistentNaming
     double InputEvent::m_mouseY_old = 0.0;
-    std::vector<IKeyListener*> InputEvent::keyListeners;
-    std::vector<IMouseListener*> InputEvent::mouseListeners;
+    std::vector<IKeyListener*> InputEvent::m_keyListeners;
+    std::vector<IMouseListener*> InputEvent::m_mouseListeners;
 
-    InputEvent::InputEvent()
-    {
-    }
+    InputEvent::InputEvent() = default;
 
     void InputEvent::handleKeyPressedEvent(const int key, const int mods)
     {
-        for (auto& listener : keyListeners) {
+        for (auto& listener : m_keyListeners) {
             listener->onKeyPressed(mapKey(key), mapMods(mods));
         }
     }
 
     void InputEvent::handleKeyReleasedEvent(const int key, const int mods)
     {
-        for (auto& listener : keyListeners) {
+        for (auto& listener : m_keyListeners) {
             listener->onKeyReleased(mapKey(key), mapMods(mods));
         }
     }
 
     void InputEvent::handleMousePressedEvent(const int button, const int mods)
     {
-        for (auto& listener : mouseListeners) {
+        for (auto& listener : m_mouseListeners) {
             listener->onMousePressed(mapMouse(button), mapMods(mods));
         }
     }
 
     void InputEvent::handleMouseReleasedEvent(const int button, const int mods)
     {
-        for (auto& listener : mouseListeners) {
+        for (auto& listener : m_mouseListeners) {
             listener->onMouseReleased(mapMouse(button), mapMods(mods));
         }
     }
@@ -46,47 +46,47 @@ namespace glfww
     void InputEvent::handleCursorEvent(const double xpos, const double ypos)
     {
         //calculates dinstance since last cursor movement in pixels
-        double dx = m_mouseX_old - xpos;
-        double dy = m_mouseY_old - ypos;
+        const auto dx = m_mouseX_old - xpos;
+        const auto dy = m_mouseY_old - ypos;
         m_mouseX_old = xpos;
         m_mouseY_old = ypos;
-        for (auto& listener : mouseListeners) {
+        for (auto& listener : m_mouseListeners) {
             listener->onMouseMoved(xpos, ypos, dx, dy);
         }
     }
 
     void InputEvent::handleScrollEvent(const double xoffset, const double yoffset)
     {
-        for (auto& listener : mouseListeners) {
+        for (auto& listener : m_mouseListeners) {
             listener->onMouseScroll(xoffset, yoffset);
         }
     }
 
     void InputEvent::attachMouseListener(IMouseListener* mouseListener)
     {
-        mouseListeners.push_back(mouseListener);
+        m_mouseListeners.push_back(mouseListener);
     }
 
     void InputEvent::detachMouseListener(const IMouseListener* mouseListener)
     {
-        mouseListeners.erase(
-            std::remove(mouseListeners.begin(), mouseListeners.end(), mouseListener),
-            mouseListeners.end());
+        m_mouseListeners.erase(
+            std::remove(m_mouseListeners.begin(), m_mouseListeners.end(), mouseListener),
+            m_mouseListeners.end());
     }
 
     void InputEvent::attachKeyListener(IKeyListener* keyListener)
     {
-        keyListeners.push_back(keyListener);
+        m_keyListeners.push_back(keyListener);
     }
 
     void InputEvent::detachKeyListener(const IKeyListener* keyListener)
     {
-        keyListeners.erase(
-            std::remove(keyListeners.begin(), keyListeners.end(), keyListener),
-            keyListeners.end());
+        m_keyListeners.erase(
+            std::remove(m_keyListeners.begin(), m_keyListeners.end(), keyListener),
+            m_keyListeners.end());
     }
 
-    Key InputEvent::mapKey(int glfwKey)
+    Key InputEvent::mapKey(const int glfwKey)
     {
         switch (glfwKey) {
         case GLFW_KEY_0:
@@ -220,7 +220,7 @@ namespace glfww
         }
     }
 
-    MouseButton InputEvent::mapMouse(int glfwMouse)
+    MouseButton InputEvent::mapMouse(const int glfwMouse)
     {
         switch (glfwMouse) {
         case GLFW_MOUSE_BUTTON_1:
@@ -244,7 +244,7 @@ namespace glfww
         }
     }
 
-    std::vector<KeyMod> InputEvent::mapMods(int glfwKey)
+    std::vector<KeyMod> InputEvent::mapMods(const int glfwKey)
     {
         std::vector<KeyMod> mods;
         if (glfwKey & GLFW_MOD_SHIFT) {

@@ -12,6 +12,7 @@ namespace glfww
     class IKeyListener
     {
     public:
+        virtual ~IKeyListener() = default;
 
         virtual void onKeyPressed(Key key, std::vector<KeyMod> mods) = 0;
         virtual void onKeyReleased(Key key, std::vector<KeyMod> mods) = 0;

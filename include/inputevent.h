@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include "keylistener.h"
 #include "mouselistener.h"
 #include "keymap.h"
@@ -14,10 +13,12 @@ namespace glfww
     {
     private:
         InputEvent();
+        // ReSharper disable once CppInconsistentNaming
         static double m_mouseX_old;
+        // ReSharper disable once CppInconsistentNaming
         static double m_mouseY_old;
-        static std::vector<IKeyListener*> keyListeners;
-        static std::vector<IMouseListener*> mouseListeners;
+        static std::vector<IKeyListener*> m_keyListeners;
+        static std::vector<IMouseListener*> m_mouseListeners;
     public:
 
         InputEvent(InputEvent const&) = delete;
@@ -42,7 +43,7 @@ namespace glfww
         static void handleMousePressedEvent(const int button, const int mods);
 
         /*! Handles the single event after a key is released.
-        \param key the glfw key id
+        \param button the glfw key id
         \param mods the glfw mod keys pressed, encoded in a single int (shift, alt, etc)
         */
         static void handleMouseReleasedEvent(const int button, const int mods);
@@ -83,7 +84,7 @@ namespace glfww
         /*! Maps glfw key enum values to a safer internal enum class format */
         static Key mapKey(int glfwKey);
         /*! Maps glfw mod enum values to a safer internal enum class format */
-        static std::vector<KeyMod> mapMods(int glfwMod);
+        static std::vector<KeyMod> mapMods(int glfwKey);
         /*! Maps glfw mouse button enum values to a safer internal enum class format */
         static MouseButton mapMouse(int glfwMouse);
     };

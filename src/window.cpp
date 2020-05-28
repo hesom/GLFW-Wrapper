@@ -6,7 +6,6 @@
 namespace glfw
 {
     GLFWwindow* Window::m_window;
-
     bool Window::init()
     {
         return glfwInit();
@@ -44,7 +43,6 @@ namespace glfw
         glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xoffset, double yoffset) {
             InputEvent::handleScrollEvent(xoffset, yoffset);
         });
-
     }
 
     void Window::destroy()
@@ -63,4 +61,7 @@ namespace glfw
         glfwPollEvents();
     }
 
+    auto Window::getProcAddress(){
+        return glfwGetProcAddress;
+    }
 }

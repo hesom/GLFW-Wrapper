@@ -4,12 +4,14 @@
 #include <string>
 
 class GLFWwindow;
+
 namespace glfw
 {
     /*! Wrapper class for a GLFW window
     Methods are static because only a single window should exist
     at any given time
     */
+
     class Window
     {
     private:
@@ -27,6 +29,7 @@ namespace glfw
         static void destroy();
         static bool exitRequested();
         static void update();
+        static auto getProcAddress();
 
         Window(Window const&) = delete;
         Window(Window const&&) = delete;

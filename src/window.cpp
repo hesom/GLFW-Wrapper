@@ -3,7 +3,7 @@
 
 #include "GLFW/glfw3.h"
 
-namespace glfww
+namespace glfw
 {
     GLFWwindow* Window::m_window;
 

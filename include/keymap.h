@@ -1,5 +1,5 @@
 #pragma once
-namespace glfww
+namespace glfw
 {
     enum class Key
     {

@@ -4,7 +4,7 @@
 #include "mouselistener.h"
 #include "keymap.h"
 
-namespace glfww
+namespace glfw
 {
     /*! The InputManager is a singleton class which dispatches the keyboard and mouse inputs gathered
     by the window to subscribed listener classes (aka observer design pattern)

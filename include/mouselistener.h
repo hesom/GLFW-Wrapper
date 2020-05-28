@@ -2,7 +2,7 @@
 #include <vector>
 #include "keymap.h"
 
-namespace glfww
+namespace glfw
 {
     /*! Implement this interface to be able to subscribe to mouse events.
     Each of these functions will only be called when the corresponding mouse

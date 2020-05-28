@@ -4,7 +4,7 @@
 #include <string>
 
 class GLFWwindow;
-namespace glfww
+namespace glfw
 {
     /*! Wrapper class for a GLFW window
     Methods are static because only a single window should exist

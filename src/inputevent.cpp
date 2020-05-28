@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace glfww
+namespace glfw
 {
     // ReSharper disable once CppInconsistentNaming
     double InputEvent::m_mouseX_old = 0.0;
